@@ -424,9 +424,8 @@ write("/aviso-legal/", layout({
   body: `<article class="wrap legal">
   <h1>Aviso legal y privacidad</h1>
   <h2>Titular del sitio</h2>
-  <p>Titular: <strong>[TU NOMBRE Y APELLIDOS]</strong><br>
-  NIF: <strong>[TU NIF]</strong><br>
-  Contacto: <strong>[TU EMAIL]</strong></p>
+  <p>Titular: <strong>Rodrigo Domínguez Montero</strong><br>
+  Contacto: <a href="mailto:elmundoentucocina93@gmail.com">elmundoentucocina93@gmail.com</a></p>
   <h2>Objeto</h2>
   <p>«El mundo en tu cocina» es un sitio web de recetas y guías de cocina, con enlaces a la venta del libro «Japón en tu cocina» en Amazon.</p>
   <h2>Afiliación a Amazon</h2>
