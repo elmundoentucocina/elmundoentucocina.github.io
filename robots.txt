@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://elmundoentucocina.github.io/sitemap.xml

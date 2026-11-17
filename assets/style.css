@@ -1,0 +1,103 @@
+:root{
+  --red:#8E1B22;
+  --cream:#F6EFE2;
+  --gold:#E8B04A;
+  --ink:#2A2420;
+  --cream-dark:#EADFC9;
+  --red-dark:#6E1218;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--cream);color:var(--ink);
+  font:400 1.0625rem/1.65 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+h1,h2,h3,.brand{font-family:"Archivo Black","Arial Black",Impact,sans-serif;font-weight:400;line-height:1.15;color:var(--red)}
+h1{font-size:clamp(1.9rem,6vw,3rem);margin:.4em 0 .5em}
+h2{font-size:clamp(1.35rem,4vw,1.75rem);margin:1.8em 0 .6em}
+h3{font-size:1.15rem;margin:.2em 0 .4em}
+a{color:var(--red);text-underline-offset:2px}
+a:hover{color:var(--red-dark)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+img{max-width:100%;height:auto}
+
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+main{min-height:60vh;padding-bottom:3rem}
+
+.site-header{
+  background:var(--red);display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;
+  align-items:center;justify-content:space-between;padding:.8rem 1rem;
+}
+.site-header .brand{color:var(--cream);text-decoration:none;font-size:1.1rem}
+.site-header nav{display:flex;gap:1.1rem}
+.site-header nav a{color:var(--cream);text-decoration:none;font-weight:500}
+.site-header nav a:hover{color:var(--gold);text-decoration:underline}
+
+.hero{background:var(--red);color:var(--cream);padding:2.5rem 0 3rem;border-bottom:6px solid var(--gold)}
+.hero h1{color:var(--cream)}
+.hero .lead{color:var(--cream)}
+.hero .eyebrow{color:var(--gold)}
+.eyebrow,.kicker{
+  font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;color:var(--red);margin:0;
+}
+.lead{font-size:1.2rem;color:var(--ink)}
+.small{font-size:.875rem;opacity:.8}
+.crumbs{font-size:.9rem;margin:1.5rem 0 0}
+
+.btns{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.2rem 0}
+.btn{
+  display:inline-block;padding:.8rem 1.3rem;border-radius:999px;background:var(--gold);color:var(--ink);
+  font-weight:700;text-decoration:none;border:2px solid var(--gold);min-height:44px;
+}
+.btn:hover{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+.btn-alt{background:transparent;color:inherit;border-color:currentColor}
+.hero .btn-alt{color:var(--cream)}
+.hero .btn-alt:hover{background:var(--cream);color:var(--red);border-color:var(--cream)}
+
+.cards{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));margin:1rem 0}
+.card{
+  display:block;background:#fff;border:2px solid var(--cream-dark);border-radius:var(--radius);
+  padding:1.1rem 1.2rem;color:var(--ink);text-decoration:none;
+}
+.card:hover{border-color:var(--red);color:var(--ink)}
+.card p{margin:0;font-size:.95rem}
+.card h3{margin-top:.3em}
+
+.facts{display:flex;gap:1.5rem;flex-wrap:wrap;list-style:none;padding:.8rem 0;margin:1rem 0;border-block:1px solid var(--cream-dark)}
+.facts strong{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--red)}
+.ingredients,.notes,.more{padding-left:1.2rem}
+.ingredients li,.notes li,.more li{margin:.4rem 0}
+.steps{padding-left:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding-left:2.6rem;margin:1rem 0}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:.05em;width:1.9rem;height:1.9rem;border-radius:50%;
+  background:var(--red);color:var(--cream);font:400 .95rem/1.9rem "Archivo Black",sans-serif;text-align:center;
+}
+
+.book-box{
+  background:var(--red);color:var(--cream);border-radius:var(--radius);padding:1.4rem;margin:2.5rem 0;
+  border-left:8px solid var(--gold);
+}
+.book-box h2{color:var(--cream);margin:.2em 0 .5em}
+.book-box .eyebrow{color:var(--gold)}
+.book-box .btn-alt{color:var(--cream)}
+.book-box .btn-alt:hover{background:var(--cream);color:var(--red);border-color:var(--cream)}
+
+.table-wrap{overflow-x:auto;margin:1rem 0}
+table{border-collapse:collapse;width:100%;min-width:36rem;background:#fff;font-size:.95rem}
+th,td{text-align:left;padding:.65rem .8rem;border-bottom:1px solid var(--cream-dark);vertical-align:top}
+thead th{background:var(--red);color:var(--cream)}
+tbody th{font-weight:700}
+
+.site-footer{background:var(--ink);color:var(--cream);padding:1.5rem 1rem;text-align:center;font-size:.9rem}
+.site-footer a{color:var(--gold)}
+.site-footer .afiliado{max-width:42rem;margin:0 auto .8rem}
+
+@media (min-width:40rem){
+  body{font-size:1.125rem}
+  .hero{padding:4rem 0 4.5rem}
+}
+@media (prefers-reduced-motion:no-preference){
+  .card,.btn{transition:border-color .15s,background .15s}
+}
