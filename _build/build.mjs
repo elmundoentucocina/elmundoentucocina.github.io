@@ -76,14 +76,17 @@ ${body}
 `;
 }
 
-const bookBox = (lead = "¿Quieres 30 recetas más como esta?") => `<aside class="book-box">
+// Botones de Amazon con evento de GoatCounter (clic) nombrado por página de origen
+const amazonBtns = (key) => `<p class="btns">
+    <a class="btn" href="${EBOOK}" rel="sponsored noopener" target="_blank" data-goatcounter-click="amazon-${key}-ebook" data-goatcounter-title="Amazon ebook (${key})">Ebook en Amazon</a>
+    <a class="btn btn-alt" href="${PAPER}" rel="sponsored noopener" target="_blank" data-goatcounter-click="amazon-${key}-tapa" data-goatcounter-title="Amazon tapa blanda (${key})">Tapa blanda en Amazon</a>
+  </p>`;
+
+const bookBox = (lead = "¿Quieres 30 recetas más como esta?", key = "web") => `<aside class="book-box">
   <p class="eyebrow">Del libro</p>
   <h2>${lead}</h2>
   <p><strong>Japón en tu cocina</strong>: 30 recetas japonesas con alma española, hechas con lo que encuentras en cualquier supermercado. Sin viajes a tiendas especializadas ni listas imposibles.</p>
-  <p class="btns">
-    <a class="btn" href="${EBOOK}" rel="sponsored noopener" target="_blank">Ebook en Amazon</a>
-    <a class="btn btn-alt" href="${PAPER}" rel="sponsored noopener" target="_blank">Tapa blanda en Amazon</a>
-  </p>
+  ${amazonBtns(key)}
   <p class="small">Enlaces de afiliado de Amazon: a ti te cuestan lo mismo.</p>
 </aside>`;
 
@@ -333,7 +336,7 @@ for (const r of recetas) {
   <ol class="steps">${r.pasos.map((p) => `<li>${p}</li>`).join("\n")}</ol>
   <h2>Notas y trucos</h2>
   <ul class="notes">${r.notas.map((n) => `<li>${n}</li>`).join("\n")}</ul>
-  ${bookBox()}
+  ${bookBox(undefined, r.slug)}
   <h2>Sigue cocinando</h2>
   <ul class="more">${otras}<li><a href="/guias/sustitutos-espanoles-ingredientes-japoneses/">8 sustitutos españoles para cocinar comida japonesa</a></li></ul>
 </article>`;
@@ -412,7 +415,7 @@ ${rows}
   <p>Hay tres cosas donde un sustituto cambia demasiado el resultado:</p>
   <ul class="notes">${noRows}</ul>
   <p>Con estos tres y la tabla de arriba puedes cocinar la gran mayoría de platos de una cocina japonesa casera.</p>
-  ${bookBox("30 recetas para usarlos")}
+  ${bookBox("30 recetas para usarlos", "sustitutos")}
 </article>`;
   write(path, layout({
     path,
@@ -467,7 +470,7 @@ const guiaJsonld = (headline, path, slug) => ({
 ${items}
   </ol>
   <p>Si cocinas alguno de estos platos, mira la receta de <a href="/recetas/gyozas-crujientes/">gyozas crujientes</a>.</p>
-  ${bookBox("Un maridaje en cada receta")}
+  ${bookBox("Un maridaje en cada receta", "vinos")}
 </article>`;
   // La invitación al libro de esta página lleva su gancho propio
   write(path, layout({
@@ -513,7 +516,7 @@ ${items}
   <h2>En tienda asiática u online</h2>
   ${ul(asiatica)}
   <p>¿No encuentras algo? Mira los <a href="/guias/sustitutos-espanoles-ingredientes-japoneses/">sustitutos españoles de ingredientes japoneses</a>.</p>
-  ${bookBox("¿Y ahora qué cocinas? 30 recetas")}
+  ${bookBox("¿Y ahora qué cocinas? 30 recetas", "lista-compra")}
 </article>`;
   write(path, layout({
     path,
@@ -539,14 +542,14 @@ write("/recetas/", layout({
   path: "/recetas/",
   title: "Recetas japonesas con ingredientes españoles | El mundo en tu cocina",
   description: "Recetas japonesas caseras con ingredientes de supermercado español: gyozas, dashi, huevos de ramen, arroz.",
-  body: `<section class="wrap"><h1>Recetas</h1><div class="cards">${cardsRecetas}</div>${bookBox()}</section>`,
+  body: `<section class="wrap"><h1>Recetas</h1><div class="cards">${cardsRecetas}</div>${bookBox(undefined, "recetas")}</section>`,
 }));
 
 write("/guias/", layout({
   path: "/guias/",
   title: "Guías de cocina japonesa práctica | El mundo en tu cocina",
   description: "Guías prácticas para cocinar japonés en España sin tiendas especializadas.",
-  body: `<section class="wrap"><h1>Guías</h1><div class="cards">${cardGuia}</div>${bookBox()}</section>`,
+  body: `<section class="wrap"><h1>Guías</h1><div class="cards">${cardGuia}</div>${bookBox(undefined, "guias")}</section>`,
 }));
 
 // ---------- portada ----------
@@ -575,7 +578,7 @@ write("/", layout({
 ${cardsRecetas}
 ${cardGuia}
   </div>
-  ${bookBox("¿Te gusta cómo cocinamos? Hay 30 recetas más")}
+  ${bookBox("¿Te gusta cómo cocinamos? Hay 30 recetas más", "portada")}
 </section>`,
 }));
 
@@ -601,16 +604,29 @@ write("/libro/", layout({
   <h1>Japón en tu cocina</h1>
   <p class="lead">30 recetas japonesas con alma española. De ${AUTOR}.</p>
   <p>Este libro nace de lo mismo que esta web: cocinar japonés en casa sin depender de tiendas especializadas ni de ingredientes imposibles de encontrar. Cada receta está pensada para el supermercado español y para una cocina normal.</p>
+  <section class="book-box libro-recetas">
+    <p class="eyebrow">Solo en el libro</p>
+    <h2>Recetas que encontrarás en el libro</h2>
+    <ul class="libro-list">
+      <li>Ramen de cocido</li>
+      <li>Gyozas de morcilla</li>
+      <li>Mochi de turrón</li>
+      <li>Curry de rabo de toro</li>
+      <li>Tataki de atún con salmorejo</li>
+      <li>Flan de matcha</li>
+      <li>Yakimeshi</li>
+      <li><strong>…y 23 recetas más</strong></li>
+    </ul>
+    ${amazonBtns("libro")}
+    <p class="small">Enlaces de afiliado de Amazon: a ti te cuestan lo mismo.</p>
+  </section>
   <h2>Qué vas a encontrar</h2>
   <ul class="notes">
     <li>30 recetas japonesas adaptadas a ingredientes que ya conoces.</li>
     <li>Equivalencias y sustitutos para cada ingrediente delicado.</li>
     <li>Técnicas básicas explicadas paso a paso.</li>
   </ul>
-  <p class="btns">
-    <a class="btn" href="${EBOOK}" rel="sponsored noopener" target="_blank">Ebook en Amazon</a>
-    <a class="btn btn-alt" href="${PAPER}" rel="sponsored noopener" target="_blank">Tapa blanda en Amazon</a>
-  </p>
+  ${amazonBtns("libro-pie")}
   <p class="small">Enlaces de afiliado de Amazon: a ti te cuestan lo mismo.</p>
   <h2>Antes de comprarlo</h2>
   <p>Prueba primero las recetas gratis de esta web: <a href="/recetas/arroz-japones-con-arroz-espanol/">arroz japonés</a>, <a href="/recetas/gyozas-crujientes/">gyozas crujientes</a> o <a href="/recetas/dashi-de-boletus/">dashi de boletus</a>. Si te gusta cómo cocinamos, el libro sigue por ahí.</p>
