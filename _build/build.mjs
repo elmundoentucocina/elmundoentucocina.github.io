@@ -13,6 +13,26 @@ const GOATCOUNTER_CODE = "elmundoentucocina"; // <- el código que elijas al reg
 const PINTEREST_TOKEN = "bc99a5c1928c9041e7e2a8cfa60a0ecf"; // <- ver guía paso 6
 const AFILIADO = "Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.";
 
+// ---------- seguridad ----------
+// Hash de integridad (SRI) de la versión fija del script de GoatCounter. Si GoatCounter publica
+// una versión nueva (count.v5.js), actualiza la URL y este hash con el que indique su documentación.
+const GOATCOUNTER_SRI = "sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+";
+// Política de seguridad de contenido: solo se ejecuta JavaScript de GoatCounter, nada inline.
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self' https://gc.zgo.at",
+  `connect-src https://${GOATCOUNTER_CODE}.goatcounter.com`,
+  `img-src 'self' https://${GOATCOUNTER_CODE}.goatcounter.com`,
+  "style-src 'self' https://fonts.googleapis.com",
+  "font-src https://fonts.gstatic.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'none'",
+  "upgrade-insecure-requests",
+].join("; ");
+// JSON-LD sin posibilidad de cerrar la etiqueta <script> desde el contenido
+const safeJson = (o) => JSON.stringify(o).replace(/</g, "\\u003c").replace(/>/g, "\\u003e").replace(/&/g, "\\u0026");
+
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const AUTOR = "Rodrigo Domínguez Montero";
@@ -36,6 +56,8 @@ function layout({ path, title, description, body, jsonld, type = "website", imag
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="${CSP}">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>${t}</title>
 <meta name="description" content="${d}">
 <link rel="canonical" href="${url}">
@@ -53,7 +75,7 @@ ${image ? `<meta property="og:image" content="${image}">\n<meta property="og:ima
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap">
 <link rel="stylesheet" href="/assets/style.css">
-${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n` : ""}</head>
+${jsonld ? `<script type="application/ld+json">${safeJson(jsonld)}</script>\n` : ""}</head>
 <body>
 <header class="site-header">
   <a class="brand" href="/">El mundo en tu cocina</a>
@@ -70,7 +92,7 @@ ${body}
   <p class="afiliado">${AFILIADO}</p>
   <p>© ${new Date().getFullYear()} El mundo en tu cocina · <a href="/aviso-legal/">Aviso legal y privacidad</a></p>
 </footer>
-<script data-goatcounter="https://${GOATCOUNTER_CODE}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://${GOATCOUNTER_CODE}.goatcounter.com/count" async src="https://gc.zgo.at/count.v4.js" crossorigin="anonymous" integrity="${GOATCOUNTER_SRI}"></script>
 </body>
 </html>
 `;

@@ -1,0 +1,17 @@
+# Configuración local de Claude Code y editores (no debe publicarse)
+.claude/
+.vscode/
+.idea/
+
+# Secretos y variables de entorno (por si algún día se añaden)
+.env
+.env.*
+*.pem
+*.key
+
+# Dependencias, logs y basura del sistema
+node_modules/
+*.log
+Thumbs.db
+desktop.ini
+.DS_Store
