@@ -15,7 +15,19 @@ const AFILIADO = "Como afiliado de Amazon, obtengo ingresos por las compras adsc
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-function layout({ path, title, description, body, jsonld, type = "website" }) {
+const AUTOR = "Rodrigo Domínguez Montero";
+const pinPng = (slug) => `${SITE}/assets/pines/${slug}.png`;
+
+// Imagen del pin + botón de guardar en Pinterest (sin JavaScript de terceros)
+function pinFigure({ slug, path, alt, description }) {
+  const save = `https://www.pinterest.es/pin/create/button/?url=${encodeURIComponent(SITE + path)}&media=${encodeURIComponent(pinPng(slug))}&description=${encodeURIComponent(description)}`;
+  return `<figure class="pin">
+    <img src="/assets/pines/${slug}.webp" width="600" height="900" alt="${esc(alt)}" fetchpriority="high">
+    <figcaption><a class="btn btn-pin" href="${esc(save)}" target="_blank" rel="noopener">Guardar en Pinterest</a></figcaption>
+  </figure>`;
+}
+
+function layout({ path, title, description, body, jsonld, type = "website", image }) {
   const url = `${SITE}${path}`;
   const t = esc(title);
   const d = esc(description);
@@ -35,6 +47,7 @@ function layout({ path, title, description, body, jsonld, type = "website" }) {
 <meta property="og:description" content="${d}">
 <meta property="og:url" content="${url}">
 <meta property="og:locale" content="es_ES">
+${image ? `<meta property="og:image" content="${image}">\n<meta property="og:image:width" content="1000">\n<meta property="og:image:height" content="1500">\n` : ""}
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,7 +79,7 @@ ${body}
 const bookBox = (lead = "¿Quieres 30 recetas más como esta?") => `<aside class="book-box">
   <p class="eyebrow">Del libro</p>
   <h2>${lead}</h2>
-  <p><strong>Japón en tu cocina</strong>: 30 recetas japonesas hechas con ingredientes que encuentras en cualquier supermercado español. Sin viajes a tiendas especializadas ni listas imposibles.</p>
+  <p><strong>Japón en tu cocina</strong>: 30 recetas japonesas con alma española, hechas con lo que encuentras en cualquier supermercado. Sin viajes a tiendas especializadas ni listas imposibles.</p>
   <p class="btns">
     <a class="btn" href="${EBOOK}" rel="sponsored noopener" target="_blank">Ebook en Amazon</a>
     <a class="btn btn-alt" href="${PAPER}" rel="sponsored noopener" target="_blank">Tapa blanda en Amazon</a>
@@ -86,27 +99,28 @@ const recetas = [
     slug: "arroz-japones-con-arroz-espanol",
     kind: "recetas",
     title: "Arroz japonés con arroz español",
-    h1: "Arroz japonés con arroz español (sin comprar arroz de sushi)",
-    desc: "Cómo cocer arroz al estilo japonés con arroz redondo o bomba de supermercado: proporciones, lavado, reposo y sazonado para sushi.",
-    intro: "No necesitas arroz de sushi importado. Un buen arroz redondo español (tipo Albufera, Calasparra o bomba) da un arroz japonés pegajoso, brillante y con ese punto firme. Lo que importa es el método.",
-    meta: { time: "PT50M", servings: "4", cookTime: "PT15M", prep: "PT35M" },
+    h1: "Cómo hacer arroz japonés con arroz español",
+    desc: "Arroz japonés sin arrocera y con el arroz redondo de siempre: 300 g de arroz, 360 ml de agua y 4 pasos. Con el aliño para sushi.",
+    intro: "Sin arrocera y con el arroz redondo de siempre. No necesitas arroz de sushi importado: un arroz redondo español (tipo Albufera o Calasparra) queda pegajoso, brillante y con ese punto firme. Lo que importa es el método.",
+    alt: "Pin: cómo hacer arroz japonés con arroz español. 300 g de arroz redondo y 360 ml de agua: lávalo, déjalo reposar 30 minutos, cuécelo tapado 12 minutos y reposa 10 minutos.",
+    meta: { time: "PT1H", servings: "4", cookTime: "PT25M", prep: "PT35M" },
     ingredientes: [
-      "300 g de arroz redondo (Albufera, Calasparra o bomba)",
-      "360 ml de agua (proporción 1:1,2; ver nota)",
+      "300 g de arroz redondo (Albufera, Calasparra o el redondo de tu súper). <strong>No uses bomba</strong>",
+      "360 ml de agua",
       "Para sushi: 45 ml de vinagre de arroz, 1 cucharada de azúcar y 1 cucharadita de sal",
     ],
     pasos: [
-      "<strong>Lava el arroz</strong> en un bol con agua fría, removiendo con la mano. Cambia el agua 3 o 4 veces hasta que salga casi transparente. Escurre.",
-      "<strong>Remoja</strong> el arroz 20-30 minutos en el agua de cocción (los 360 ml). Es lo que da una textura pareja.",
-      "Pon la olla tapada a <strong>fuego fuerte</strong> hasta que hierva (vas a oír el burbujeo; no destapes).",
-      "Baja al <strong>mínimo y cuece 12 minutos</strong> tapado.",
-      "Apaga el fuego y <strong>deja reposar 10 minutos sin abrir</strong>. Aquí termina de hacerse con el vapor.",
+      "<strong>Lávalo</strong> frotándolo con las manos y cambiando el agua 3 o 4 veces, hasta que salga casi transparente. Escurre bien.",
+      "<strong>Déjalo reposar 30 minutos</strong> en el cazo con los 360 ml de agua medida. Es lo que da una textura pareja.",
+      "Pon el cazo tapado a fuego fuerte. Cuando hierva (lo oirás, no destapes), baja al mínimo y <strong>cuécelo tapado 12 minutos</strong>.",
+      "<strong>Reposa 10 minutos más</strong> con el fuego apagado y la tapa puesta. Aquí termina de hacerse con el vapor.",
       "Airea con una espátula, cortando y levantando, sin aplastar los granos.",
       "<strong>Para sushi:</strong> calienta el vinagre con el azúcar y la sal hasta que se disuelvan, y mézclalo con el arroz aún tibio, en un bol ancho y sin amasar. Abanica unos minutos para que brille.",
     ],
     notas: [
-      "<strong>Nota de proporciones:</strong> cada marca absorbe distinto. Empieza en 1:1,2 en peso/volumen; si te queda duro, la próxima vez sube a 1:1,3. La bomba suele pedir algo más de agua que el redondo corriente.",
-      "Usa una olla con tapa que cierre bien. Una tapa que deja escapar vapor es la causa número uno de arroz seco.",
+      "<strong>Ojo: el arroz bomba no sirve.</strong> Absorbe demasiado y no se pega, justo lo contrario de lo que buscamos.",
+      "Cada marca absorbe un poco distinto. Si te queda duro, la próxima vez sube a 380 ml de agua; si queda blando, baja a 340 ml.",
+      "Usa un cazo con tapa que cierre bien. Una tapa que deja escapar vapor es la causa número uno de arroz seco.",
       "Si no tienes vinagre de arroz, vale vinagre de manzana suave con un pellizco más de azúcar.",
       "Se conserva 1 día en la nevera, pero mejor sírvelo el mismo día. Recaliéntalo con una cucharada de agua en el microondas.",
     ],
@@ -116,26 +130,25 @@ const recetas = [
     slug: "dashi-de-boletus",
     kind: "recetas",
     title: "Dashi de boletus",
-    h1: "Dashi de boletus: el caldo japonés con ingredientes de aquí",
-    desc: "Un dashi con boletus seco y alga kombu para sopa de miso, fideos, huevos y salsas. Receta sencilla, hecha en 40 minutos.",
-    intro: "El dashi es la base de la cocina japonesa: un caldo ligero y lleno de umami. El tradicional lleva katsuobushi (bonito seco), difícil de encontrar. El boletus seco da un umami profundo y se compra en cualquier supermercado.",
-    meta: { time: "PT40M", servings: "4", cookTime: "PT15M", prep: "PT25M" },
+    h1: "Dashi casero con boletus secos",
+    desc: "El caldo base de la cocina japonesa, sin bonito seco ni alga kombu: 15 g de boletus secos, 1 litro de agua y 3 pasos.",
+    intro: "Sin bonito seco ni alga kombu, y con sabor a bosque. El dashi es la base de la cocina japonesa: un caldo ligero y lleno de umami. El tradicional lleva katsuobushi (bonito seco) y kombu, difíciles de encontrar. Los boletus secos están en cualquier supermercado.",
+    alt: "Pin: dashi casero con boletus secos. 15 g de boletus secos y 1 litro de agua templada: remojo de 20 minutos, hervir suave 10 minutos y colar.",
+    meta: { time: "PT35M", servings: "4", cookTime: "PT15M", prep: "PT20M" },
     ingredientes: [
-      "1 litro de agua",
-      "15 g de boletus seco",
-      "10 g de alga kombu (un trozo de unos 10 cm; opcional, ver nota)",
+      "15 g de boletus secos",
+      "1 litro de agua templada",
       "Sal, al final y solo si hace falta",
     ],
     pasos: [
-      "Pon el boletus y el kombu en el agua <strong>fría</strong> y déjalos <strong>30 minutos</strong> (o toda la noche en la nevera, aún mejor).",
-      "Calienta a fuego medio-bajo. <strong>Retira el kombu justo antes de que hierva</strong>: si hierve, amarga y se vuelve algo viscoso.",
-      "Mantén el caldo a fuego suave con el boletus <strong>8-10 minutos</strong>, sin hervir fuerte.",
-      "Cuela con un colador fino o un paño. Prueba, y sala solo si lo necesitas.",
+      "<strong>Remojo de 20 minutos:</strong> pon los boletus en el agua templada.",
+      "<strong>Llévalo a ebullición</strong> y deja hervir suave 10 minutos.",
+      "<strong>Cuela el caldo</strong> con un colador fino (o un paño, si los boletus traen arenilla). Pica los boletus y aprovéchalos en la sopa.",
     ],
     notas: [
-      "<strong>Sin kombu:</strong> sale un caldo más terroso y menos redondo, pero muy bueno. Puedes añadir un trozo de puerro para dar dulzor.",
-      "No tires el boletus hidratado: pícalo y úsalo en rellenos, revueltos o en la salsa de unos fideos.",
-      "<strong>Para qué sirve:</strong> sopa de miso, caldo de fideos, caldo para huevos y verduras, arroz. Prueba a sustituir el agua por dashi en cualquier receta.",
+      "<strong>Por qué funciona:</strong> los boletus aportan el mismo umami que el dashi japonés. Perfecto para sopa de miso, fideos y guisos.",
+      "Prueba antes de salar: el caldo se suele usar con miso o soja, que ya ponen la sal.",
+      "<strong>Si un día encuentras kombu</strong> (herbolarios, tiendas bio), añade un trozo de 10 cm al remojo y retíralo antes de que hierva. Queda más redondo, pero no es imprescindible.",
       "Dura 3 días en la nevera o 3 meses congelado (en cubiteras, para usar por porciones).",
     ],
     siguiente: ["gyozas-crujientes"],
@@ -144,12 +157,13 @@ const recetas = [
     slug: "gyozas-crujientes",
     kind: "recetas",
     title: "Gyozas crujientes",
-    h1: "Gyozas crujientes de cerdo y repollo (con trucos para que no se peguen)",
-    desc: "Gyozas caseras con relleno de cerdo y repollo, doradas por abajo y tiernas por arriba. Con salsa y opción de masa casera o obleas de supermercado.",
-    intro: "El secreto de una buena gyoza es la técnica de cocción: dorar, añadir agua, tapar para cocer al vapor y destapar para que vuelva a quedar crujiente. Puedes usar obleas compradas o hacer la masa tú.",
+    h1: "Cómo hacer gyozas crujientes por abajo",
+    desc: "La técnica para gyozas crujientes por abajo y tiernas por arriba: plancha, vapor y plancha en la misma sartén. Con relleno de cerdo y repollo y salsa.",
+    intro: "Plancha, vapor y plancha, en la misma sartén. El secreto de una buena gyoza está en la cocción: dorar, añadir agua y tapar para hacerlas al vapor, y destapar para que la base vuelva a quedar crujiente. Abajo tienes también un relleno clásico de cerdo y repollo.",
+    alt: "Pin: cómo hacer gyozas crujientes por abajo. Dóralas 2 minutos, echa 100 ml de agua y tapa 4-5 minutos al vapor, y destapa 1 minuto más.",
     meta: { time: "PT1H", servings: "4 (unas 24 gyozas)", cookTime: "PT10M", prep: "PT50M" },
     ingredientes: [
-      "24 obleas de gyoza (o la masa casera de abajo)",
+      "24 obleas de gyoza (o de empanadilla pequeña del súper, o la masa casera de abajo)",
       "250 g de carne picada de cerdo",
       "150 g de repollo (o col china) picado muy fino, con 1/2 cucharadita de sal",
       "2 cebolletas picadas finas",
@@ -167,14 +181,15 @@ const recetas = [
       "Mezcla el repollo con la sal, deja 10 minutos y <strong>escúrrelo apretando</strong> con las manos. Este paso evita que el relleno suelte agua y rompa la masa.",
       "Mezcla el repollo con el resto del relleno y amasa con la mano hasta que la carne quede pegajosa.",
       "Pon una cucharadita colmada en cada oblea, humedece el borde, dobla y <strong>pliega</strong> en 5-7 pliegues cerrando bien.",
-      "Calienta 1 cucharada de aceite en una sartén antiadherente con tapa. Coloca las gyozas con la base plana hacia abajo y dóralas <strong>2 minutos</strong>.",
-      "Añade <strong>80 ml de agua</strong> (con cuidado: salpica), <strong>tapa y cuece 5 minutos</strong> al vapor.",
-      "Destapa y deja que se evapore el agua <strong>1-2 minutos</strong> más, hasta que la base quede dorada y crujiente.",
+      "<strong>Dóralas 2 minutos</strong> en una sartén con tapa y un poco de aceite, a fuego medio-alto, apoyadas en su base y muy juntas.",
+      "<strong>Echa 100 ml de agua y tapa enseguida</strong> (cuidado, salpica). Déjalas 4-5 minutos al vapor, hasta que el agua se evapore.",
+      "<strong>Destapa y deja 1 minuto más</strong> para que la base vuelva a quedar crujiente.",
       "Sirve con la salsa mezclada.",
     ],
     notas: [
-      "<strong>Truco de la «ala» crujiente:</strong> sustituye el agua del paso 6 por 1 cucharadita de harina disuelta en 80 ml de agua. Al evaporarse queda una lámina crujiente que une todas las gyozas.",
-      "<strong>Congelar:</strong> pon las gyozas crudas en una bandeja sin tocarse, congela y luego pásalas a una bolsa. Se cocinan directamente del congelador sumando 1-2 minutos.",
+      "<strong>¿No encuentras obleas de gyoza?</strong> Las de empanadillas pequeñas del súper sirven.",
+      "<strong>¿Te sobran?</strong> Congélalas crudas en una bandeja, sin que se toquen, y luego pásalas a una bolsa. Cocínalas sin descongelar, con 1 minuto más de vapor.",
+      "<strong>Truco de la «ala» crujiente:</strong> disuelve 1 cucharadita de harina en los 100 ml de agua. Al evaporarse queda una lámina crujiente que une todas las gyozas.",
       "Si el relleno te parece seco, añade una cucharada de agua o de caldo (por ejemplo, <a href=\"/recetas/dashi-de-boletus/\">dashi de boletus</a>).",
     ],
     siguiente: ["huevos-de-ramen-ajitama"],
@@ -183,31 +198,30 @@ const recetas = [
     slug: "huevos-de-ramen-ajitama",
     kind: "recetas",
     title: "Huevos de ramen (ajitama)",
-    h1: "Huevos de ramen (ajitama): yema melosa y marinada en soja",
-    desc: "Cómo hacer ajitama en casa: tiempo exacto de cocción, marinada con soja y tiempo de reposo para una yema melosa.",
-    intro: "Los ajitama son huevos cocidos con la yema todavía blanda y marinados en una mezcla de soja y mirin. Van en ramen, pero también con arroz, ensaladas o solos como aperitivo.",
-    meta: { time: "PT8H20M", servings: "4", cookTime: "PT7M", prep: "PT20M" },
+    h1: "Cómo hacer huevos de ramen en casa",
+    desc: "Huevos de ramen (ajitama) con yema melosa y marinado de soja y Pedro Ximénez: tiempo exacto de cocción y de marinado.",
+    intro: "Yema melosa y marinado de soja y Pedro Ximénez. Los ajitama son los huevos que coronan el ramen. Aquí el Pedro Ximénez hace el papel del mirin, y también están buenísimos con arroz, en ensaladas o solos como aperitivo.",
+    alt: "Pin: cómo hacer huevos de ramen en casa. 4 huevos, 100 ml de salsa de soja, 100 ml de agua y 2 cucharadas de Pedro Ximénez: cuécelos 6 minutos y medio, agua con hielo, marínalos de 4 horas a una noche.",
+    meta: { time: "PT4H20M", servings: "4", cookTime: "PT7M", prep: "PT15M" },
     ingredientes: [
-      "4 huevos grandes, sacados de la nevera",
-      "80 ml de salsa de soja",
-      "80 ml de agua",
-      "3 cucharadas de mirin (o 3 de vino blanco seco + 1 cucharadita extra de azúcar)",
-      "1 cucharada de azúcar",
+      "4 huevos, sacados de la nevera",
+      "100 ml de salsa de soja",
+      "100 ml de agua",
+      "2 cucharadas de Pedro Ximénez",
       "Hielo y agua fría",
     ],
     pasos: [
-      "Mezcla la soja, el agua, el mirin y el azúcar. Calienta hasta que el azúcar se disuelva y <strong>deja enfriar del todo</strong>.",
-      "Hierve abundante agua. Baja los huevos <strong>fríos, directos de la nevera</strong>, con una cuchara y empieza a contar.",
-      "<strong>6 minutos y 30 segundos</strong> para yema líquida y melosa. 7 minutos si la quieres más cuajada.",
-      "Pásalos enseguida a un bol con <strong>agua con hielo</strong> y déjalos 10 minutos.",
-      "Pela con cuidado bajo un hilo de agua.",
-      "Mételos en una bolsa con cierre (o un recipiente justo) con la marinada fría, sacando el aire para que queden cubiertos.",
-      "Marina en la nevera <strong>entre 4 y 12 horas</strong>. Dales la vuelta de vez en cuando.",
+      "Mezcla en un recipiente la soja, el agua y el Pedro Ximénez. Esa es la marinada.",
+      "<strong>Cuécelos 6 minutos y medio</strong> en agua ya hirviendo. Bájalos con una cuchara, fríos, directos de la nevera.",
+      "<strong>Pásalos a agua con hielo</strong> 10 minutos y pélalos con cuidado, mejor bajo un hilo de agua.",
+      "<strong>Marínalos</strong> en la nevera, de 4 horas a una noche. Mejor en una bolsa con cierre y sin aire, para que queden cubiertos.",
+      "<strong>Córtalos justo antes de servir</strong> con un hilo o un cuchillo mojado.",
     ],
     notas: [
+      "<strong>El Pedro Ximénez hace el papel del mirin:</strong> brillo y un punto dulce.",
       "No pases de <strong>24 horas</strong> de marinada: quedan salados y la yema se endurece.",
-      "Si el huevo es muy grande o muy pequeño, ajusta medio minuto arriba o abajo.",
-      "Duran 3 días en la nevera. Para servir, corta por la mitad con un hilo de coser o un cuchillo bien mojado.",
+      "Si el huevo es muy grande o muy pequeño, ajusta medio minuto arriba o abajo. 7 minutos si quieres la yema más cuajada.",
+      "Ya pelados y marinados, duran 3 días en la nevera.",
       "Sírvelos sobre <a href=\"/recetas/arroz-japones-con-arroz-espanol/\">arroz japonés</a> con un chorrito de la marinada, o en un caldo caliente de <a href=\"/recetas/dashi-de-boletus/\">dashi de boletus</a>.",
     ],
     siguiente: ["arroz-japones-con-arroz-espanol"],
@@ -224,7 +238,8 @@ for (const r of recetas) {
     name: r.title,
     description: r.desc,
     inLanguage: "es",
-    author: { "@type": "Person", name: "Autor de «Japón en tu cocina»" },
+    author: { "@type": "Person", name: AUTOR },
+    image: pinPng(r.slug),
     prepTime: r.meta.prep,
     cookTime: r.meta.cookTime,
     totalTime: r.meta.time,
@@ -242,6 +257,7 @@ for (const r of recetas) {
   <p class="crumbs"><a href="/">Inicio</a> › <a href="/recetas/">Recetas</a></p>
   <h1>${esc(r.h1)}</h1>
   <p class="lead">${r.intro}</p>
+  ${pinFigure({ slug: r.slug, path, alt: r.alt, description: r.h1 })}
   <ul class="facts">
     <li><strong>Tiempo total</strong> ${humanTime(r.meta.time)}</li>
     <li><strong>Raciones</strong> ${esc(r.meta.servings)}</li>
@@ -254,9 +270,9 @@ for (const r of recetas) {
   <ul class="notes">${r.notas.map((n) => `<li>${n}</li>`).join("\n")}</ul>
   ${bookBox()}
   <h2>Sigue cocinando</h2>
-  <ul class="more">${otras}<li><a href="/guias/sustitutos-espanoles-ingredientes-japoneses/">Sustitutos españoles de ingredientes japoneses</a></li></ul>
+  <ul class="more">${otras}<li><a href="/guias/sustitutos-espanoles-ingredientes-japoneses/">8 sustitutos españoles para cocinar comida japonesa</a></li></ul>
 </article>`;
-  write(path, layout({ path, title: `${r.title} | El mundo en tu cocina`, description: r.desc, body, jsonld, type: "article" }));
+  write(path, layout({ path, title: `${r.title} | El mundo en tu cocina`, description: r.desc, body, jsonld, type: "article", image: pinPng(r.slug) }));
 }
 
 function humanTime(iso) {
@@ -266,12 +282,21 @@ function humanTime(iso) {
 }
 
 // ---------- guía de sustitutos ----------
+// Los 8 del pin (en el mismo orden)
+const ocho = [
+  ["Mirin", "Pedro Ximénez + agua", "A partes iguales. Dulce y con cuerpo, da el mismo brillo a teriyakis y glaseados."],
+  ["Sake de cocina", "Fino o manzanilla", "La misma cantidad. Seco y aromático, para marinados y caldos. Un vino blanco seco también sirve."],
+  ["Dashi", "Caldo de boletus secos", "15 g de boletus secos por litro de agua. <a href=\"/recetas/dashi-de-boletus/\">Receta de dashi de boletus</a>."],
+  ["Katsuobushi", "Virutas de jamón crujiente", "Seca lonchas finas de jamón en la sartén o en el horno hasta que crujan y desmígalas. Para espolvorear sobre arroz, verduras u okonomiyaki."],
+  ["Beni shoga", "Piparras", "Picadas finas, dan el mismo contraste ácido y picante al yakisoba, el okonomiyaki o los cuencos de arroz."],
+  ["Mayonesa japonesa", "Mayonesa casera + vinagre de arroz", "Hazla con vinagre de arroz en lugar de limón: queda más suave y con el punto ácido de la japonesa."],
+  ["Tenkasu", "Picatostes machacados", "Las bolitas crujientes de tempura. Machaca picatostes y añádelos al final para que no se ablanden."],
+  ["Salsa okonomiyaki", "Ketchup, Worcestershire, soja y miel", "Por ejemplo: 3 cucharadas de ketchup, 2 de Worcestershire, 1 de soja y 1 de miel. Ajusta a tu gusto."],
+];
+
 const sustitutos = [
-  ["Arroz de sushi", "Arroz redondo (Albufera, Calasparra) o bomba", "Lávalo bien y respeta el reposo. <a href=\"/recetas/arroz-japones-con-arroz-espanol/\">Ver método</a>."],
-  ["Mirin", "Vino blanco seco + una pizca de azúcar", "3 cucharadas de vino + 1 cucharadita de azúcar por cada 3 de mirin. En marinadas y salsas apenas se nota."],
-  ["Sake (para cocinar)", "Vino blanco seco, fino o manzanilla", "Misma cantidad. Evapora el alcohol al calentar."],
+  ["Arroz de sushi", "Arroz redondo (Albufera, Calasparra). El bomba no sirve", "Lávalo bien y respeta el reposo. <a href=\"/recetas/arroz-japones-con-arroz-espanol/\">Ver método</a>."],
   ["Vinagre de arroz", "Vinagre de manzana suave", "Añade una pizca más de azúcar para redondear la acidez."],
-  ["Dashi", "Caldo de boletus seco (con o sin kombu)", "<a href=\"/recetas/dashi-de-boletus/\">Receta de dashi de boletus</a>."],
   ["Panko", "Pan rallado grueso de pan del día anterior", "Tritura pan sin corteza en trozos grandes y tuéstalo unos minutos en el horno. Queda igual de crujiente."],
   ["Wasabi", "Rábano picante (rábano rusticano) + un toque de mostaza", "El de tubo lleva en realidad mucho rábano picante. Mejor el que se vende como crema de rábano picante."],
   ["Jengibre encurtido (gari)", "Jengibre fresco en láminas finas con vinagre y azúcar", "Escalda 1 minuto las láminas y deja 2 horas en vinagre con azúcar y sal."],
@@ -292,14 +317,24 @@ const noSustituto = [
 
 {
   const path = "/guias/sustitutos-espanoles-ingredientes-japoneses/";
+  const slug = "sustitutos-espanoles-ingredientes-japoneses";
   const rows = sustitutos
     .map(([j, e, n]) => `<tr><th scope="row">${j}</th><td>${e}</td><td>${n}</td></tr>`)
+    .join("\n");
+  const ochoList = ocho
+    .map(([j, e, n]) => `<li><p class="swap"><span>${j}</span> <span aria-hidden="true">→</span><span class="sr">: sustitúyelo por</span> <strong>${e}</strong></p><p>${n}</p></li>`)
     .join("\n");
   const noRows = noSustituto.map(([j, n]) => `<li><strong>${j}.</strong> ${n}</li>`).join("\n");
   const body = `<article class="wrap guide">
   <p class="crumbs"><a href="/">Inicio</a> › <a href="/guias/">Guías</a></p>
-  <h1>Sustitutos españoles de ingredientes japoneses</h1>
-  <p class="lead">Casi todo lo que necesitas para cocinar japonés está en tu supermercado. Esta es la tabla de equivalencias que más uso, qué sustituir y qué conviene comprar de verdad.</p>
+  <h1>8 sustitutos españoles para cocinar comida japonesa</h1>
+  <p class="lead">Con lo que ya tienes en la despensa. Casi todo lo que pide una receta japonesa tiene un equivalente en el supermercado español: estos son los ocho que más uso y cómo usarlos.</p>
+  ${pinFigure({ slug, path, alt: "Pin: 8 sustitutos españoles para cocinar comida japonesa. Mirin: Pedro Ximénez y agua. Sake de cocina: fino o manzanilla. Dashi: caldo de boletus secos. Katsuobushi: virutas de jamón crujiente. Beni shoga: piparras. Mayonesa japonesa: mayonesa casera con vinagre de arroz. Tenkasu: picatostes machacados. Salsa okonomiyaki: ketchup, Worcestershire, soja y miel.", description: "8 sustitutos españoles para cocinar comida japonesa" })}
+  <ol class="swaps">
+${ochoList}
+  </ol>
+  <h2>Más sustitutos</h2>
+  <p>Otros ingredientes japoneses que también tienen un buen equivalente aquí:</p>
   <div class="table-wrap">
   <table>
     <thead><tr><th scope="col">Ingrediente japonés</th><th scope="col">Sustituto español</th><th scope="col">Cómo usarlo</th></tr></thead>
@@ -312,17 +347,20 @@ ${rows}
   <p>Hay tres cosas donde un sustituto cambia demasiado el resultado:</p>
   <ul class="notes">${noRows}</ul>
   <p>Con estos tres y la tabla de arriba puedes cocinar la gran mayoría de platos de una cocina japonesa casera.</p>
-  ${bookBox("¿Quieres 30 recetas hechas así?")}
+  ${bookBox("30 recetas para usarlos")}
 </article>`;
   write(path, layout({
     path,
-    title: "Sustitutos españoles de ingredientes japoneses | El mundo en tu cocina",
-    description: "Tabla de equivalencias para cocinar japonés con ingredientes españoles: mirin, sake, panko, wasabi, dashi, arroz de sushi y más.",
+    title: "8 sustitutos españoles para cocinar comida japonesa | El mundo en tu cocina",
+    description: "Mirin, sake, dashi, katsuobushi, beni shoga, mayonesa japonesa, tenkasu y salsa okonomiyaki: sus sustitutos con ingredientes españoles, y cómo usarlos.",
     body,
+    image: pinPng(slug),
     jsonld: {
       "@context": "https://schema.org",
       "@type": "Article",
-      headline: "Sustitutos españoles de ingredientes japoneses",
+      headline: "8 sustitutos españoles para cocinar comida japonesa",
+      image: pinPng(slug),
+      author: { "@type": "Person", name: AUTOR },
       inLanguage: "es",
       mainEntityOfPage: `${SITE}${path}`,
     },
@@ -333,7 +371,7 @@ ${rows}
 // ---------- portadas de sección ----------
 const card = (href, kicker, title, text) => `<a class="card" href="${href}"><span class="kicker">${kicker}</span><h3>${title}</h3><p>${text}</p></a>`;
 const cardsRecetas = recetas.map((r) => card(`/recetas/${r.slug}/`, "Receta", r.title, r.desc)).join("\n");
-const cardGuia = card("/guias/sustitutos-espanoles-ingredientes-japoneses/", "Guía", "Sustitutos españoles de ingredientes japoneses", "Qué usar en lugar de mirin, panko, wasabi, dashi y arroz de sushi.");
+const cardGuia = card("/guias/sustitutos-espanoles-ingredientes-japoneses/", "Guía", "8 sustitutos españoles para cocinar comida japonesa", "Qué usar en lugar de mirin, sake, dashi, katsuobushi y más, con lo que ya tienes en la despensa.");
 
 write("/recetas/", layout({
   path: "/recetas/",
@@ -382,14 +420,15 @@ ${cardGuia}
 // ---------- libro ----------
 write("/libro/", layout({
   path: "/libro/",
-  title: "Japón en tu cocina: 30 recetas japonesas con ingredientes españoles",
-  description: "«Japón en tu cocina»: 30 recetas japonesas con ingredientes españoles. Disponible en ebook y tapa blanda en Amazon.",
+  title: "Japón en tu cocina: 30 recetas japonesas con alma española",
+  description: "«Japón en tu cocina», de Rodrigo Domínguez Montero: 30 recetas japonesas con alma española. Disponible en ebook y tapa blanda en Amazon.",
   jsonld: {
     "@context": "https://schema.org",
     "@type": "Book",
     name: "Japón en tu cocina",
+    author: { "@type": "Person", name: AUTOR },
     inLanguage: "es",
-    description: "30 recetas japonesas con ingredientes españoles.",
+    description: "30 recetas japonesas con alma española.",
     workExample: [
       { "@type": "Book", bookFormat: "https://schema.org/EBook", url: "https://www.amazon.es/dp/B0HLT3C4NK" },
       { "@type": "Book", bookFormat: "https://schema.org/Paperback", url: "https://www.amazon.es/dp/B0HM1KHS7G" },
@@ -398,7 +437,7 @@ write("/libro/", layout({
   body: `<article class="wrap">
   <p class="crumbs"><a href="/">Inicio</a> › El libro</p>
   <h1>Japón en tu cocina</h1>
-  <p class="lead">30 recetas japonesas hechas con ingredientes españoles.</p>
+  <p class="lead">30 recetas japonesas con alma española. De ${AUTOR}.</p>
   <p>Este libro nace de lo mismo que esta web: cocinar japonés en casa sin depender de tiendas especializadas ni de ingredientes imposibles de encontrar. Cada receta está pensada para el supermercado español y para una cocina normal.</p>
   <h2>Qué vas a encontrar</h2>
   <ul class="notes">

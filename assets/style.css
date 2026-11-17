@@ -90,6 +90,20 @@ th,td{text-align:left;padding:.65rem .8rem;border-bottom:1px solid var(--cream-d
 thead th{background:var(--red);color:var(--cream)}
 tbody th{font-weight:700}
 
+.pin{margin:1.5rem auto;max-width:18rem;text-align:center}
+.pin img{display:block;width:100%;border-radius:var(--radius);box-shadow:0 6px 20px rgba(42,36,32,.18)}
+.pin figcaption{margin-top:.8rem}
+.btn-pin{background:var(--red);border-color:var(--red);color:var(--cream);font-size:.95rem;padding:.6rem 1.1rem}
+.btn-pin:hover{background:var(--ink);border-color:var(--ink)}
+
+.swaps{list-style:none;padding:0;margin:1.5rem 0;display:grid;gap:.7rem}
+.swaps li{background:#fff;border:2px solid var(--cream-dark);border-radius:var(--radius);padding:.9rem 1.1rem}
+.swaps p{margin:.2rem 0;font-size:.95rem}
+.swaps .swap{font-size:1.05rem;margin-bottom:.35rem}
+.swaps .swap span:first-child{font-weight:700}
+.swaps .swap strong{color:var(--red)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
 .site-footer{background:var(--ink);color:var(--cream);padding:1.5rem 1rem;text-align:center;font-size:.9rem}
 .site-footer a{color:var(--gold)}
 .site-footer .afiliado{max-width:42rem;margin:0 auto .8rem}
