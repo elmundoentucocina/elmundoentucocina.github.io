@@ -10,7 +10,7 @@ const TAG = "jetc-web-21";
 const EBOOK = `https://www.amazon.es/dp/B0HLT3C4NK?tag=${TAG}`;
 const PAPER = `https://www.amazon.es/dp/B0HM1KHS7G?tag=${TAG}`;
 const GOATCOUNTER_CODE = "elmundoentucocina"; // <- el código que elijas al registrarte en goatcounter.com
-const PINTEREST_TOKEN = "PEGA_AQUI_EL_CODIGO_DE_PINTEREST"; // <- ver guía paso 6
+const PINTEREST_TOKEN = "bc99a5c1928c9041e7e2a8cfa60a0ecf"; // <- ver guía paso 6
 const AFILIADO = "Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.";
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
