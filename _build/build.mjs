@@ -226,6 +226,71 @@ const recetas = [
     ],
     siguiente: ["arroz-japones-con-arroz-espanol"],
   },
+  {
+    slug: "pimientos-de-padron-con-miso",
+    kind: "recetas",
+    title: "Pimientos de Padrón con miso: tapa fácil en 15 minutos",
+    h1: "Pimientos de Padrón con miso",
+    desc: "La tapa de siempre con un glaseado japonés: pimientos de Padrón salteados y glaseados con miso blanco y Pedro Ximénez. Fácil, en 15 minutos.",
+    intro: "La tapa de siempre con un glaseado japonés. En Japón tienen su propio pimiento de Padrón: el shishitō, pequeño, verde y con alguno que pica de vez en cuando. En las izakayas se sirve a la plancha con un glaseado de miso. Con los nuestros sale igual de bien.",
+    alt: "Pin: pimientos de Padrón con miso. 300 g de pimientos, aceite de oliva, miso blanco, Pedro Ximénez y agua: saltea 4-5 minutos, añade la salsa 30 segundos y termina con sésamo y sal en escamas.",
+    meta: { time: "PT15M", servings: "4 (como tapa)", cookTime: "PT5M", prep: "PT10M" },
+    ingredientes: [
+      "300 g de pimientos de Padrón",
+      "2 cucharadas de aceite de oliva",
+      "1 cucharada de miso blanco",
+      "1 cucharada de Pedro Ximénez",
+      "1 cucharada de agua",
+      "1 cucharadita de semillas de sésamo tostado",
+      "Sal en escamas",
+    ],
+    pasos: [
+      "<strong>Mezcla el miso con el Pedro Ximénez y el agua</strong> hasta tener una salsa fluida.",
+      "Lava y <strong>seca muy bien</strong> los pimientos.",
+      "Calienta el aceite en una sartén amplia a <strong>fuego fuerte</strong> y saltea los pimientos <strong>4-5 minutos</strong>, moviéndolos de vez en cuando, hasta que tengan la piel ampollada y tostada en algunas zonas.",
+      "<strong>Baja el fuego</strong>, añade la salsa de miso y remueve <strong>30 segundos</strong> para que los glasee. No lo prolongues: el miso se quema enseguida.",
+      "Sírvelos con el sésamo y un poco de sal en escamas.",
+    ],
+    notas: [
+      "<strong>Para beber:</strong> una caña bien tirada o un txakoli joven, ligero y con un punto de aguja.",
+      "Si los pimientos están mojados, salpican y no se ampollan: sécalos bien.",
+      "El miso blanco está en refrigerados o en la zona de productos asiáticos. Más sobre qué comprar en la <a href=\"/guias/lista-de-la-compra-cocina-japonesa/\">lista de la compra japonesa</a>.",
+      "Como en los de siempre, alguno pica: es parte del juego.",
+    ],
+    siguiente: ["gyozas-crujientes"],
+  },
+  {
+    slug: "berenjenas-con-miso-y-miel-de-cana",
+    kind: "recetas",
+    title: "Berenjenas con miso y miel de caña: receta fácil al horno",
+    h1: "Berenjenas con miso y miel de caña",
+    desc: "Berenjenas al horno glaseadas con miso blanco, miel de caña y Pedro Ximénez: el nasu dengaku japonés cruzado con las berenjenas con miel de Andalucía. Fácil, en 35 minutos.",
+    intro: "Japón y Andalucía en el mismo plato. El nasu dengaku japonés, berenjena asada y glaseada con miso dulce, se cruza aquí con las berenjenas fritas con miel de caña de Andalucía. Por fuera, caramelizadas; por dentro, casi una crema.",
+    alt: "Pin: berenjenas con miso y miel de caña. 2 berenjenas, 3 cucharadas de miso blanco, 1 de miel de caña, 1 de Pedro Ximénez y 1 de agua: hornéalas boca abajo a 200 grados 20-25 minutos, cúbrelas con la salsa y gratínalas 3-4 minutos.",
+    meta: { time: "PT35M", servings: "4 (como entrante)", cookTime: "PT30M", prep: "PT5M" },
+    ingredientes: [
+      "2 berenjenas medianas",
+      "Aceite de oliva",
+      "3 cucharadas de miso blanco",
+      "1 cucharada de miel de caña",
+      "1 cucharada de Pedro Ximénez",
+      "1 cucharada de agua",
+      "Semillas de sésamo y cebolleta picada, para terminar",
+    ],
+    pasos: [
+      "<strong>Precalienta el horno a 200 °C.</strong> Corta las berenjenas por la mitad a lo largo y haz cortes en forma de rejilla en la pulpa, sin llegar a la piel.",
+      "<strong>Pinta la pulpa con aceite</strong> y ponlas boca abajo en una bandeja con papel de horno. Hornéalas <strong>20-25 minutos</strong>, hasta que estén muy tiernas.",
+      "Mientras tanto, <strong>mezcla el miso, la miel de caña, el Pedro Ximénez y el agua</strong>.",
+      "<strong>Da la vuelta a las berenjenas</strong>, cúbrelas con una capa de la salsa de miso y gratínalas con el grill, a media altura, <strong>3-4 minutos</strong>, vigilando hasta que la superficie burbujee y se tueste.",
+      "Termínalas con sésamo y cebolleta. Se comen con cuchara, raspando la pulpa de la piel.",
+    ],
+    notas: [
+      "<strong>Sin miel de caña:</strong> usa miel normal con unas gotas de salsa de soja.",
+      "<strong>Para beber:</strong> un amontillado, cuyas notas tostadas se entienden muy bien con el miso. Para algo japonés, un sake junmai templado.",
+      "El miso blanco está en refrigerados o en la zona de productos asiáticos. Más en la <a href=\"/guias/lista-de-la-compra-cocina-japonesa/\">lista de la compra japonesa</a>.",
+    ],
+    siguiente: ["pimientos-de-padron-con-miso"],
+  },
 ];
 
 const bySlug = Object.fromEntries(recetas.map((r) => [r.slug, r]));
@@ -287,11 +352,11 @@ const ocho = [
   ["Mirin", "Pedro Ximénez + agua", "A partes iguales. Dulce y con cuerpo, da el mismo brillo a teriyakis y glaseados."],
   ["Sake de cocina", "Fino o manzanilla", "La misma cantidad. Seco y aromático, para marinados y caldos. Un vino blanco seco también sirve."],
   ["Dashi", "Caldo de boletus secos", "15 g de boletus secos por litro de agua. <a href=\"/recetas/dashi-de-boletus/\">Receta de dashi de boletus</a>."],
-  ["Katsuobushi", "Virutas de jamón crujiente", "Seca lonchas finas de jamón en la sartén o en el horno hasta que crujan y desmígalas. Para espolvorear sobre arroz, verduras u okonomiyaki."],
+  ["Katsuobushi", "Virutas de jamón crujiente", "Coloca lonchas finas de jamón serrano entre dos hojas de papel de cocina y caliéntalas en el microondas en tandas de 30 segundos, hasta que estén crujientes (1-2 minutos en total). Desmigájalas cuando se enfríen."],
   ["Beni shoga", "Piparras", "Picadas finas, dan el mismo contraste ácido y picante al yakisoba, el okonomiyaki o los cuencos de arroz."],
   ["Mayonesa japonesa", "Mayonesa casera + vinagre de arroz", "Hazla con vinagre de arroz en lugar de limón: queda más suave y con el punto ácido de la japonesa."],
   ["Tenkasu", "Picatostes machacados", "Las bolitas crujientes de tempura. Machaca picatostes y añádelos al final para que no se ablanden."],
-  ["Salsa okonomiyaki", "Ketchup, Worcestershire, soja y miel", "Por ejemplo: 3 cucharadas de ketchup, 2 de Worcestershire, 1 de soja y 1 de miel. Ajusta a tu gusto."],
+  ["Salsa okonomiyaki", "Ketchup, Worcestershire, soja y miel", "4 cucharadas de ketchup, 3 de salsa Worcestershire (tipo Perrins), 1 de salsa de soja y 1 cucharadita de miel o azúcar. Mezcla hasta que la miel se disuelva. Se conserva una semana en la nevera."],
 ];
 
 const sustitutos = [
@@ -368,10 +433,107 @@ ${rows}
   }));
 }
 
+// ---------- guía: vinos ----------
+const guiaJsonld = (headline, path, slug) => ({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline,
+  image: pinPng(slug),
+  author: { "@type": "Person", name: AUTOR },
+  inLanguage: "es",
+  mainEntityOfPage: `${SITE}${path}`,
+});
+
+{
+  const slug = "vinos-espanoles-comida-japonesa";
+  const path = `/guias/${slug}/`;
+  const vinos = [
+    ["Tempura", "Cava brut nature: las burbujas limpian el frito"],
+    ["Takoyaki y pulpo", "Albariño, como en las ferias gallegas"],
+    ["Tataki de atún", "Manzanilla de Sanlúcar, bien fría"],
+    ["Pescado al miso", "Godello con crianza sobre lías"],
+    ["Gyozas de carne", "Tinto joven de Ribera del Duero"],
+  ];
+  const items = vinos
+    .map(([plato, vino]) => `<li><p class="swap"><span>${plato}</span> <span aria-hidden="true">→</span><span class="sr">: marida con</span> <strong>${vino}</strong></p></li>`)
+    .join("\n");
+  const h1 = "5 vinos españoles para comida japonesa";
+  const body = `<article class="wrap guide">
+  <p class="crumbs"><a href="/">Inicio</a> › <a href="/guias/">Guías</a></p>
+  <h1>${h1}</h1>
+  <p class="lead">Funcionan igual de bien que el sake. Cinco maridajes con vino español para los platos japoneses más populares.</p>
+  ${pinFigure({ slug, path, alt: "Pin: 5 vinos españoles para comida japonesa. Tempura: cava brut nature. Takoyaki y pulpo: albariño. Tataki de atún: manzanilla de Sanlúcar, bien fría. Pescado al miso: godello con crianza sobre lías. Gyozas de carne: tinto joven de Ribera del Duero.", description: h1 })}
+  <ol class="swaps">
+${items}
+  </ol>
+  <p>Si cocinas alguno de estos platos, mira la receta de <a href="/recetas/gyozas-crujientes/">gyozas crujientes</a>.</p>
+  ${bookBox("Un maridaje en cada receta")}
+</article>`;
+  // La invitación al libro de esta página lleva su gancho propio
+  write(path, layout({
+    path,
+    title: "5 vinos españoles que van genial con comida japonesa | El mundo en tu cocina",
+    description: "Cava, albariño, manzanilla, godello y Ribera del Duero: qué vino español beber con tempura, takoyaki, tataki, pescado al miso y gyozas.",
+    body: body.replace("<p><strong>Japón en tu cocina</strong>:", "<p>Cada una de las 30 recetas del libro trae su maridaje con un vino español. <strong>Japón en tu cocina</strong>:"),
+    image: pinPng(slug),
+    jsonld: guiaJsonld(h1, path, slug),
+    type: "article",
+  }));
+}
+
+// ---------- guía: lista de la compra ----------
+{
+  const slug = "lista-de-la-compra-cocina-japonesa";
+  const path = `/guias/${slug}/`;
+  const super_ = [
+    "Salsa de soja (mejor japonesa, más suave que la china)",
+    "Vinagre de arroz",
+    "Miso blanco (en refrigerados o en la zona de productos asiáticos)",
+    "Jengibre fresco",
+    "Sésamo y aceite de sésamo tostado",
+    "Panko",
+    "Alga nori",
+    "Arroz redondo (si encuentras arroz para sushi, mejor)",
+    "Matcha de repostería (más barato y suficiente)",
+  ];
+  const asiatica = [
+    "Harina de arroz glutinoso (mochiko o shiratamako, para el mochi)",
+    "Fideos de ramen (algunos supermercados ya los tienen)",
+    "Obleas para gyoza (sirven las de empanadilla pequeñas)",
+  ];
+  const ul = (a) => `<ul class="checklist">${a.map((i) => `<li>${i}</li>`).join("\n")}</ul>`;
+  const h1 = "Cocina japonesa en casa: qué comprar";
+  const body = `<article class="wrap guide">
+  <p class="crumbs"><a href="/">Inicio</a> › <a href="/guias/">Guías</a></p>
+  <h1>${h1}</h1>
+  <p class="lead">Casi todo lo tienes ya en el supermercado. Esta es la lista para empezar a cocinar comida japonesa en casa.</p>
+  ${pinFigure({ slug, path, alt: "Pin: cocina japonesa en casa, qué comprar. En el supermercado: salsa de soja, vinagre de arroz, miso blanco, jengibre fresco, sésamo y aceite de sésamo tostado, panko, alga nori, arroz redondo y matcha de repostería. En tienda asiática u online: harina de arroz glutinoso, fideos de ramen y obleas para gyoza.", description: h1 })}
+  <h2>En el supermercado</h2>
+  ${ul(super_)}
+  <h2>En tienda asiática u online</h2>
+  ${ul(asiatica)}
+  <p>¿No encuentras algo? Mira los <a href="/guias/sustitutos-espanoles-ingredientes-japoneses/">sustitutos españoles de ingredientes japoneses</a>.</p>
+  ${bookBox("¿Y ahora qué cocinas? 30 recetas")}
+</article>`;
+  write(path, layout({
+    path,
+    title: "Lista de la compra para cocinar comida japonesa en casa | El mundo en tu cocina",
+    description: "Qué comprar en el supermercado y qué buscar en tienda asiática para cocinar comida japonesa en casa: soja, miso, panko, nori, arroz, matcha y más.",
+    body,
+    image: pinPng(slug),
+    jsonld: guiaJsonld(h1, path, slug),
+    type: "article",
+  }));
+}
+
 // ---------- portadas de sección ----------
 const card = (href, kicker, title, text) => `<a class="card" href="${href}"><span class="kicker">${kicker}</span><h3>${title}</h3><p>${text}</p></a>`;
 const cardsRecetas = recetas.map((r) => card(`/recetas/${r.slug}/`, "Receta", r.title, r.desc)).join("\n");
-const cardGuia = card("/guias/sustitutos-espanoles-ingredientes-japoneses/", "Guía", "8 sustitutos españoles para cocinar comida japonesa", "Qué usar en lugar de mirin, sake, dashi, katsuobushi y más, con lo que ya tienes en la despensa.");
+const cardGuia = [
+  card("/guias/sustitutos-espanoles-ingredientes-japoneses/", "Guía", "8 sustitutos españoles para cocinar comida japonesa", "Qué usar en lugar de mirin, sake, dashi, katsuobushi y más, con lo que ya tienes en la despensa."),
+  card("/guias/lista-de-la-compra-cocina-japonesa/", "Guía", "Cocina japonesa en casa: qué comprar", "Qué comprar en el supermercado y qué buscar en tienda asiática u online."),
+  card("/guias/vinos-espanoles-comida-japonesa/", "Guía", "5 vinos españoles para comida japonesa", "Cava, albariño, manzanilla, godello y Ribera del Duero con tempura, tataki, gyozas y más."),
+].join("\n");
 
 write("/recetas/", layout({
   path: "/recetas/",
@@ -490,7 +652,7 @@ writeFileSync(join(ROOT, "404.html"), layout({
 }));
 
 // ---------- sitemap y robots ----------
-const urls = ["/", "/recetas/", "/guias/", "/libro/", "/aviso-legal/", ...recetas.map((r) => `/${r.kind}/${r.slug}/`), "/guias/sustitutos-espanoles-ingredientes-japoneses/"];
+const urls = ["/", "/recetas/", "/guias/", "/libro/", "/aviso-legal/", ...recetas.map((r) => `/${r.kind}/${r.slug}/`), "/guias/sustitutos-espanoles-ingredientes-japoneses/", "/guias/lista-de-la-compra-cocina-japonesa/", "/guias/vinos-espanoles-comida-japonesa/"];
 const today = new Date().toISOString().slice(0, 10);
 writeFileSync(join(ROOT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}\n</urlset>\n`);
 writeFileSync(join(ROOT, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`);

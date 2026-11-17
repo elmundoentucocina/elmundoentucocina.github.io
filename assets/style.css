@@ -102,6 +102,9 @@ tbody th{font-weight:700}
 .swaps .swap{font-size:1.05rem;margin-bottom:.35rem}
 .swaps .swap span:first-child{font-weight:700}
 .swaps .swap strong{color:var(--red)}
+.checklist{list-style:none;padding:0;margin:1rem 0;display:grid;gap:.5rem}
+.checklist li{position:relative;padding:.55rem .9rem .55rem 2.6rem;background:#fff;border:2px solid var(--cream-dark);border-radius:10px}
+.checklist li::before{content:"";position:absolute;left:.9rem;top:.8rem;width:1.1rem;height:1.1rem;border:2px solid var(--red);border-radius:4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 .site-footer{background:var(--ink);color:var(--cream);padding:1.5rem 1rem;text-align:center;font-size:.9rem}
